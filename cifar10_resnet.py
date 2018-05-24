@@ -209,9 +209,11 @@ else:
                                  samplewise_std_normalization=False, zca_whitening=False, rotation_range=0,
                                  width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True, vertical_flip=False)
     datagen.fit(x_train)
+    # batch_size：整数，指定进行梯度下降时每个batch包含的样本数。训练时一个batch的样本会被计算一次梯度下降，使目标函数优化一步
     model.fit_generator(datagen.flow(x_train, y_train, batch_size=batch_size), validation_data=(x_test, y_test),
                         epochs=epochs, verbose=1, workers=4, callbacks=callbacks)
 
+# verbose：日志显示，0为不在标准输出流输出日志信息，1为输出进度条记录，2为每个epoch输出一行记录
 scores = model.evaluate(x_test, y_test, verbose=1)
 print('Test loss:', scores[0])
 print('Test accuracy:', scores[1])
